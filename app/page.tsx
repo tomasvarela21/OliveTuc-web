@@ -18,20 +18,6 @@ interface CustomerInfo {
   notes: string
 }
 
-/*const OliveOilIcon = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 512 512" className={className} xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" strokeWidth="20" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M448,352c0,40-32,64-64,64s-64-24-64-64c0-24,16-48,40-64L160,112c-24-16-40-40-40-64c0-40,32-64,64-64s64,24,64,64" fill="#7cb342"/>
-    <path d="M448,352c-40,40-80,24-80,8c0-32,32-48,80-8z" fill="#7cb342"/>
-    <path d="M128,48c40-40,80-24,80-8c0,32-32,48-80,8z" fill="#7cb342"/>
-    <path d="M128,48c-32-16-64-48-64-80" stroke="#7cb342"/>
-    <path d="M448,352c-32,16-64,48-64,80" stroke="#7cb342"/>
-    <circle cx="160" cy="80" r="24" fill="#8bc34a" stroke="#000" strokeWidth="10"/>
-    <circle cx="352" cy="384" r="24" fill="#8bc34a" stroke="#000" strokeWidth="10"/>
-    <path d="M352,384L160,80" stroke="#000" strokeWidth="10"/>
-  </svg>
-)*/
-
-
 export default function OlivaTucStore() {
   const [cart, setCart] = useState<CartItem[]>([])
   const [showCart, setShowCart] = useState(false)
@@ -172,7 +158,7 @@ export default function OlivaTucStore() {
     setFormErrors({})
 
     const message = generateWhatsAppMessage()
-    const whatsappUrl = `https://wa.me/5493813432202?text=${message}`
+    const whatsappUrl = `https://wa.me/5493816661189?text=${message}`
     window.open(whatsappUrl, '_blank')
     setShowCart(false)
   }
