@@ -13,8 +13,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Oliva Tuc",
-  description: "Aceite de Oliva Extra Virgen",
+  title: "Oliva.Tuc - Aceite de Oliva Extra Virgen",
+  description: "Descubre el mejor aceite de oliva extra virgen artesanal de Tucumán. Calidad premium y envíos rápidos.",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
@@ -23,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="es">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
