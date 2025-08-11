@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useRef } from "react"
-import { Plus, Minus, ShoppingCart, Phone, MapPin, Leaf, Instagram, Clock, Award, Heart, X, Menu, Grape, Apple } from 'lucide-react'
+import { Plus, Minus, ShoppingCart, Phone, MapPin, Leaf, Instagram, Clock, Award, Heart, X, Menu } from 'lucide-react'
 
 interface CartItem {
   id: string
