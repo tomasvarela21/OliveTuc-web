@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useRef } from "react"
-import { Plus, Minus, ShoppingCart, Phone, MapPin, Leaf, Instagram, Clock, Award, Heart, X, Menu } from 'lucide-react'
+import { Plus, Minus, ShoppingCart, Phone, MapPin, Leaf, Instagram, Clock, Award, Heart, X, Menu, Grape, Apple } from 'lucide-react'
 
 interface CartItem {
   id: string
@@ -18,6 +18,20 @@ interface CustomerInfo {
   notes: string
 }
 
+/*const OliveOilIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 512 512" className={className} xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" strokeWidth="20" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M448,352c0,40-32,64-64,64s-64-24-64-64c0-24,16-48,40-64L160,112c-24-16-40-40-40-64c0-40,32-64,64-64s64,24,64,64" fill="#7cb342"/>
+    <path d="M448,352c-40,40-80,24-80,8c0-32,32-48,80-8z" fill="#7cb342"/>
+    <path d="M128,48c40-40,80-24,80-8c0,32-32,48-80,8z" fill="#7cb342"/>
+    <path d="M128,48c-32-16-64-48-64-80" stroke="#7cb342"/>
+    <path d="M448,352c-32,16-64,48-64,80" stroke="#7cb342"/>
+    <circle cx="160" cy="80" r="24" fill="#8bc34a" stroke="#000" strokeWidth="10"/>
+    <circle cx="352" cy="384" r="24" fill="#8bc34a" stroke="#000" strokeWidth="10"/>
+    <path d="M352,384L160,80" stroke="#000" strokeWidth="10"/>
+  </svg>
+)*/
+
+
 export default function OlivaTucStore() {
   const [cart, setCart] = useState<CartItem[]>([])
   const [showCart, setShowCart] = useState(false)
@@ -28,6 +42,7 @@ export default function OlivaTucStore() {
     address: "",
     notes: ""
   })
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({})
 
   const heroRef = useRef<HTMLElement | null>(null)
   const catalogRef = useRef<HTMLElement | null>(null)
@@ -138,13 +153,26 @@ export default function OlivaTucStore() {
   }
 
   const handleWhatsAppRedirect = () => {
-    if (!customerInfo.name || !customerInfo.phone || !customerInfo.address) {
-      alert("Por favor completa todos los campos obligatorios (Nombre, Teléfono y Dirección)")
+    const errors: Record<string, string> = {}
+    if (!customerInfo.name) {
+      errors.name = "Por favor, ingresa tu nombre completo."
+    }
+    if (!customerInfo.phone) {
+      errors.phone = "Por favor, ingresa tu número de teléfono."
+    }
+    if (!customerInfo.address) {
+      errors.address = "Por favor, ingresa tu dirección de entrega."
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors)
       return
     }
-    
+
+    setFormErrors({})
+
     const message = generateWhatsAppMessage()
-    const whatsappUrl = `https://wa.me/5493816661189?text=${message}`
+    const whatsappUrl = `https://wa.me/5493813432202?text=${message}`
     window.open(whatsappUrl, '_blank')
     setShowCart(false)
   }
@@ -165,7 +193,8 @@ export default function OlivaTucStore() {
               </button>
 
               <div className="relative">
-                <Leaf className="h-10 w-10 text-white" />
+                {/* Icono personalizado reemplazando el Leaf */}
+                <Leaf className="h-10 w-10" />
                 <div className="absolute -top-1 -right-1 w-4 h-4 bg-amber-400 rounded-full animate-pulse"></div>
               </div>
               <div className="ml-2 sm:ml-3">
@@ -214,9 +243,9 @@ export default function OlivaTucStore() {
                   )}
                 </button>
 
-                {/* Dropdown Cart - Centrado más hacia la izquierda */}
+                {/* Dropdown Cart - Posición ajustada por tamaño de pantalla */}
                 {showCart && (
-                  <div className="absolute right-0 sm:-right-12 md:-right-20 lg:-right-32 top-full mt-2 w-[95vw] max-w-md sm:max-w-lg md:w-96 bg-white rounded-2xl shadow-2xl border-0 z-50 max-h-[80vh] overflow-hidden">
+                  <div className="absolute right-0 sm:right-0 md:-right-16 lg:-right-4 top-full mt-2 w-[95vw] max-w-md sm:max-w-lg md:w-96 bg-white rounded-2xl shadow-2xl border-0 z-50 max-h-[80vh] overflow-hidden">
                     <div className="bg-gradient-to-r from-emerald-600 to-green-600 text-white p-4 flex items-center justify-between">
                       <h3 className="font-semibold flex items-center">
                         <ShoppingCart className="h-5 w-5 mr-2" />
@@ -297,9 +326,12 @@ export default function OlivaTucStore() {
                               <input
                                 value={customerInfo.name}
                                 onChange={(e) => setCustomerInfo({...customerInfo, name: e.target.value})}
-                                className="w-full border border-gray-200 rounded-lg p-2 text-sm focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none"
+                                className={`w-full border rounded-lg p-2 text-sm focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none ${formErrors.name ? 'border-red-500' : 'border-gray-200'}`}
                                 placeholder="Tu nombre completo"
                               />
+                              {formErrors.name && (
+                                <p className="text-red-500 text-xs mt-1">{formErrors.name}</p>
+                              )}
                             </div>
 
                             <div className="space-y-1">
@@ -307,9 +339,12 @@ export default function OlivaTucStore() {
                               <input
                                 value={customerInfo.phone}
                                 onChange={(e) => setCustomerInfo({...customerInfo, phone: e.target.value})}
-                                className="w-full border border-gray-200 rounded-lg p-2 text-sm focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none"
+                                className={`w-full border rounded-lg p-2 text-sm focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none ${formErrors.phone ? 'border-red-500' : 'border-gray-200'}`}
                                 placeholder="Tu número de teléfono"
                               />
+                              {formErrors.phone && (
+                                <p className="text-red-500 text-xs mt-1">{formErrors.phone}</p>
+                              )}
                             </div>
 
                             <div className="space-y-1">
@@ -317,9 +352,12 @@ export default function OlivaTucStore() {
                               <input
                                 value={customerInfo.address}
                                 onChange={(e) => setCustomerInfo({...customerInfo, address: e.target.value})}
-                                className="w-full border border-gray-200 rounded-lg p-2 text-sm focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none"
+                                className={`w-full border rounded-lg p-2 text-sm focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none ${formErrors.address ? 'border-red-500' : 'border-gray-200'}`}
                                 placeholder="Dirección de entrega"
                               />
+                              {formErrors.address && (
+                                <p className="text-red-500 text-xs mt-1">{formErrors.address}</p>
+                              )}
                             </div>
 
                             <div className="space-y-1">
@@ -454,25 +492,25 @@ export default function OlivaTucStore() {
 
         {/* Products Catalog */}
         <section ref={catalogRef} className="mb-10 sm:mb-20">
-          <div className="text-center mb-8 sm:mb-12">
+          <div className="text-center mb-6 sm:mb-8 md:mb-12">
             <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-2 sm:mb-4">Nuestro Catálogo</h3>
-            <p className="text-base sm:text-xl text-gray-600">Botellas de un litro de aceite de oliva extra virgen</p>
+            <p className="text-sm sm:text-base md:text-xl text-gray-600">Botellas de un litro de aceite de oliva extra virgen</p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-6 md:gap-8">
             {products.map((product) => (
               <div key={product.id} className="group bg-white border-0 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 rounded-2xl overflow-hidden">
                 <div className="relative">
                   <div className="absolute inset-0 bg-gradient-to-br from-green-500/20 to-amber-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="relative p-8">
-                    <div className="flex justify-between items-start mb-4">
+                  <div className="relative p-4 sm:p-6 md:p-8">
+                    <div className="flex justify-between items-start mb-3 sm:mb-4">
                       <div className="flex-1">
-                        <span className="mb-3 bg-green-100 text-green-800 hover:bg-green-200 transition-colors px-3 py-1 rounded-full text-sm font-medium">
+                        <span className="mb-2 sm:mb-3 bg-green-100 text-green-800 hover:bg-green-200 transition-colors px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium">
                           {product.size}
                         </span>
-                        <h4 className="text-xl font-bold text-gray-800 group-hover:text-green-700 transition-colors mt-3">
+                        <h4 className="text-lg sm:text-xl font-bold text-gray-800 group-hover:text-green-700 transition-colors mt-2 sm:mt-3 leading-tight">
                           {product.name}
                         </h4>
-                        <p className="text-gray-600 mt-2 leading-relaxed">
+                        <p className="text-gray-600 mt-1 sm:mt-2 leading-relaxed text-sm sm:text-base">
                           {product.description}
                         </p>
                       </div>
@@ -481,36 +519,36 @@ export default function OlivaTucStore() {
                     <div className="flex items-end justify-between">
                       <div>
                         {product.savings > 0 && (
-                          <div className="flex items-center space-x-2 mb-2">
-                            <span className="text-sm text-gray-500 line-through">
+                          <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-2 mb-2">
+                            <span className="text-xs sm:text-sm text-gray-500 line-through">
                               {formatPrice(product.originalPrice)}
                             </span>
-                            <span className="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full font-medium">
-                              ¡Descuento especial!
+                            <span className="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full font-medium mt-1 sm:mt-0 inline-block">
+                              ¡Descuento!
                             </span>
                           </div>
                         )}
-                        <p className="text-3xl font-bold text-green-600">
+                        <p className="text-2xl sm:text-3xl font-bold text-green-600">
                           {formatPrice(product.price)}
                         </p>
                       </div>
                       
                       <div className="relative">
                         <div className="absolute inset-0 bg-gradient-to-r from-green-600 to-green-500 rounded-full blur opacity-30 group-hover:opacity-50 transition-opacity"></div>
-                        <div className="relative w-16 h-16 bg-gradient-to-r from-green-600 to-green-500 rounded-full flex items-center justify-center">
-                          <Leaf className="h-8 w-8 text-white" />
+                        <div className="relative w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-green-600 to-green-500 rounded-full flex items-center justify-center">
+                          <Leaf className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
                 
-                <div className="p-8 pt-0">
+                <div className="p-4 sm:p-6 md:p-8 pt-0">
                   <button
                     onClick={() => addToCart(product)}
-                    className="w-full bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white font-semibold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
+                    className="w-full bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white font-semibold py-2.5 sm:py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center text-sm sm:text-base"
                   >
-                    <Plus className="h-5 w-5 mr-2" />
+                    <Plus className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
                     Agregar al Carrito
                   </button>
                 </div>
@@ -568,6 +606,10 @@ export default function OlivaTucStore() {
                   <Phone className="h-5 w-5 text-green-400" />
                   <span>381 666 1189 <span className='text-xs text-gray-300'>(facundo)</span></span>
                 </a>
+                <div className="flex items-center space-x-3 hover:text-green-400 transition-colors">
+                  <MapPin className="h-5 w-5 text-green-400" />
+                  <span>San Miguel y Yerba Buena</span>
+                </div>
                 <a
                   href="https://instagram.com/oliva.tuc"
                   target="_blank"
@@ -577,11 +619,6 @@ export default function OlivaTucStore() {
                   <Instagram className="h-5 w-5 text-green-400" />
                   <span>@oliva.tuc</span>
                 </a>
-                <div className="flex items-center space-x-3 hover:text-green-400 transition-colors">
-                  <MapPin className="h-5 w-5 text-green-400" />
-                  <span>San Miguel y Yerba Buena</span>
-                </div>
-                
               </div>
             </div>
 
@@ -591,28 +628,29 @@ export default function OlivaTucStore() {
               <ul className="space-y-2 text-gray-300">
                 <li className="flex items-center space-x-2 hover:text-green-400 transition-colors cursor-pointer">
                   <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                  <span>100% Natural</span>
+                  <span>Extra Virgen de Primera Presión</span>
                 </li>
                 <li className="flex items-center space-x-2 hover:text-green-400 transition-colors cursor-pointer">
                   <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                  <span>Extra Virgen</span>
+                  <span>Producido en el sur de Tucumán</span>
                 </li>
                 <li className="flex items-center space-x-2 hover:text-green-400 transition-colors cursor-pointer">
                   <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                  <span>Calidad Premium</span>
+                  <span>Botellas de 1 Litro</span>
                 </li>
                 <li className="flex items-center space-x-2 hover:text-green-400 transition-colors cursor-pointer">
                   <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                  <span>Producción Artesanal</span>
+                  <span>Libre de T.A.C.C</span>
+                </li>
+                <li className="flex items-center space-x-2 hover:text-green-400 transition-colors cursor-pointer">
+                  <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                  <span>Ideal para ensaladas y cocción</span>
                 </li>
               </ul>
             </div>
           </div>
-          
-          <div className="border-t border-gray-700 my-8"></div>
-          
-          <div className="text-center text-gray-400">
-            <p>&copy; 2024 OLIVA.TUC. Todos los derechos reservados.</p>
+          <div className="text-center text-gray-500 text-sm mt-12 border-t border-gray-700 pt-8">
+            &copy; {new Date().getFullYear()} OLIVA.TUC. Todos los derechos reservados.
           </div>
         </div>
       </footer>
