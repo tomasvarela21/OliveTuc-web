@@ -187,7 +187,7 @@ export default function OlivaTucStore() {
                 <h1 className="text-3xl font-bold text-white">
                   Oliva.Tuc
                 </h1>
-                <p className="text-green-100 text-sm font-medium">Aceite de Oliva Artesanal</p>
+                <p className="text-green-100 text-sm font-medium">Aceite de Oliva Rioja Oliva</p>
               </div>
             </div>
 
@@ -435,13 +435,11 @@ export default function OlivaTucStore() {
               </div>
               
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-green-700 via-green-600 to-amber-600 bg-clip-text text-transparent">
-                Aceite de Oliva Artesanal
+                Aceite de Oliva Rioja Oliva
               </h2>
               
               <p className="text-base sm:text-lg md:text-xl text-gray-700 mb-6 sm:mb-8 leading-relaxed">
-                En <strong>OLIVA.TUC</strong> nos dedicamos a producir el mejor aceite de oliva extra virgen 
-                de manera artesanal, manteniendo los métodos tradicionales que garantizan 
-                la máxima calidad y sabor auténtico.
+                En <strong>OLIVA.TUC</strong> nos dedicamos a distribuir el Aceite de oliva virgen Extra, zumo oleoso obtenido en frío de la molienda de la aceituna sin más tratamiento que el lavado y el filtrado. El aceite de oliva virgen extra Rioja Olivas es el de más alta calidad siendo su acidez menor a 1º . 
               </p>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
@@ -457,8 +455,8 @@ export default function OlivaTucStore() {
                 </div>
                 <div className="text-center p-6 bg-white/50 rounded-2xl hover:bg-white/80 transition-all duration-300 hover:shadow-lg">
                   <Heart className="h-12 w-12 text-red-500 mx-auto mb-4" />
-                  <h3 className="font-semibold text-gray-800 mb-2">Hecho con Amor</h3>
-                  <p className="text-gray-600 text-sm">Producción artesanal familiar</p>
+                  <h3 className="font-semibold text-gray-800 mb-2">Distribuido de la mejor manera</h3>
+                  <p className="text-gray-600 text-sm">Productos de primer calidad y confiabilidad</p>
                 </div>
               </div>
               
@@ -555,7 +553,7 @@ export default function OlivaTucStore() {
                 <h3 className="text-2xl font-bold">OLIVA.TUC</h3>
               </div>
               <p className="text-gray-300 leading-relaxed">
-                Aceite de oliva artesanal de la más alta calidad, 
+                Aceite de oliva extra virgen de la más alta calidad, 
                 producido con amor y tradición familiar.
               </p>
               <div className="flex space-x-4">
@@ -616,10 +614,7 @@ export default function OlivaTucStore() {
                   <div className="w-2 h-2 bg-green-400 rounded-full"></div>
                   <span>Extra Virgen de Primera Presión</span>
                 </li>
-                <li className="flex items-center space-x-2 hover:text-green-400 transition-colors cursor-pointer">
-                  <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                  <span>Producido en el sur de Tucumán</span>
-                </li>
+               
                 <li className="flex items-center space-x-2 hover:text-green-400 transition-colors cursor-pointer">
                   <div className="w-2 h-2 bg-green-400 rounded-full"></div>
                   <span>Botellas de 1 Litro</span>
@@ -630,7 +625,7 @@ export default function OlivaTucStore() {
                 </li>
                 <li className="flex items-center space-x-2 hover:text-green-400 transition-colors cursor-pointer">
                   <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                  <span>Ideal para ensaladas y cocción</span>
+                  <span>Ideal para cocinar y para tus ensaladas</span>
                 </li>
               </ul>
             </div>
