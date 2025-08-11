@@ -2,13 +2,6 @@
 
 import { useState, useRef } from "react"
 import { Plus, Minus, ShoppingCart, Phone, MapPin, Leaf, Instagram, Clock, Award, Heart, X, Menu } from 'lucide-react'
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
 
 interface CartItem {
   id: string
@@ -151,7 +144,7 @@ export default function OlivaTucStore() {
     }
     
     const message = generateWhatsAppMessage()
-    const whatsappUrl = `https://wa.me/5493813432202?text=${message}`
+    const whatsappUrl = `https://wa.me/5493816661189?text=${message}`
     window.open(whatsappUrl, '_blank')
     setShowCart(false)
   }
@@ -163,6 +156,14 @@ export default function OlivaTucStore() {
         <div className="container mx-auto px-2 sm:px-4 py-3 sm:py-4">
           <div className="flex items-center justify-between flex-wrap gap-2">
             <div className="flex items-center space-x-2 sm:space-x-3">
+              {/* Mobile Menu Button - Movido a la izquierda */}
+              <button
+                onClick={() => setShowMobileMenu(!showMobileMenu)}
+                className="md:hidden bg-white/20 hover:bg-white/30 text-white border border-white/30 px-3 py-2 rounded-lg"
+              >
+                <Menu className="h-5 w-5" />
+              </button>
+
               <div className="relative">
                 <Leaf className="h-10 w-10 text-white" />
                 <div className="absolute -top-1 -right-1 w-4 h-4 bg-amber-400 rounded-full animate-pulse"></div>
@@ -200,36 +201,33 @@ export default function OlivaTucStore() {
             <div className="flex items-center space-x-2 sm:space-x-4">
               {/* Cart Button */}
               <div className="relative">
-                <Button
+                <button
                   onClick={() => setShowCart(!showCart)}
-                  className="relative bg-white/20 hover:bg-white/30 text-white border-white/30 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-                  variant="outline"
+                  className="relative bg-white/20 hover:bg-white/30 text-white border border-white/30 px-4 py-2 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center"
                 >
                   <ShoppingCart className="h-5 w-5 mr-2" />
-                  Carrito
+                  <span className="hidden sm:inline">Carrito</span>
                   {getTotalItems() > 0 && (
-                    <Badge className="absolute -top-2 -right-2 bg-amber-500 text-green-900 animate-bounce">
+                    <span className="absolute -top-2 -right-2 bg-amber-500 text-green-900 text-xs font-bold rounded-full h-6 w-6 flex items-center justify-center animate-bounce">
                       {getTotalItems()}
-                    </Badge>
+                    </span>
                   )}
-                </Button>
+                </button>
 
-                {/* Dropdown Cart */}
+                {/* Dropdown Cart - Centrado más hacia la izquierda */}
                 {showCart && (
-              <div className="absolute right-0 top-full mt-2 w-[95vw] max-w-xs sm:max-w-md md:w-96 bg-white rounded-2xl shadow-2xl border-0 z-50 max-h-[80vh] overflow-hidden">
+                  <div className="absolute right-0 sm:-right-12 md:-right-20 lg:-right-32 top-full mt-2 w-[95vw] max-w-md sm:max-w-lg md:w-96 bg-white rounded-2xl shadow-2xl border-0 z-50 max-h-[80vh] overflow-hidden">
                     <div className="bg-gradient-to-r from-emerald-600 to-green-600 text-white p-4 flex items-center justify-between">
                       <h3 className="font-semibold flex items-center">
                         <ShoppingCart className="h-5 w-5 mr-2" />
                         Carrito de Compras
                       </h3>
-                      <Button
+                      <button
                         onClick={() => setShowCart(false)}
-                        variant="ghost"
-                        size="sm"
-                        className="text-white hover:bg-white/20 p-1 h-auto"
+                        className="text-white hover:bg-white/20 p-1 rounded-full transition-colors"
                       >
                         <X className="h-4 w-4" />
-                      </Button>
+                      </button>
                     </div>
 
                     {cart.length === 0 ? (
@@ -256,23 +254,19 @@ export default function OlivaTucStore() {
                                 </div>
                                 <div className="flex items-center justify-between flex-wrap gap-2">
                                   <div className="flex items-center space-x-1 sm:space-x-2">
-                                    <Button
-                                      size="sm"
-                                      variant="outline"
+                                    <button
                                       onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                                      className="h-7 w-7 p-0 rounded-full hover:bg-red-50 hover:border-red-200 hover:text-red-600 transition-colors"
+                                      className="h-7 w-7 p-0 rounded-full hover:bg-red-50 hover:border-red-200 hover:text-red-600 transition-colors border border-gray-300 flex items-center justify-center"
                                     >
                                       <Minus className="h-3 w-3" />
-                                    </Button>
+                                    </button>
                                     <span className="w-6 text-center font-semibold text-sm">{item.quantity}</span>
-                                    <Button
-                                      size="sm"
-                                      variant="outline"
+                                    <button
                                       onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                                      className="h-7 w-7 p-0 rounded-full hover:bg-green-50 hover:border-green-200 hover:text-green-600 transition-colors"
+                                      className="h-7 w-7 p-0 rounded-full hover:bg-green-50 hover:border-green-200 hover:text-green-600 transition-colors border border-gray-300 flex items-center justify-center"
                                     >
                                       <Plus className="h-3 w-3" />
-                                    </Button>
+                                    </button>
                                   </div>
                                   <p className="text-xs text-gray-500">
                                     {formatPrice(item.price)} c/u
@@ -283,7 +277,7 @@ export default function OlivaTucStore() {
                           </div>
                         </div>
 
-                        <Separator />
+                        <div className="border-t border-gray-200"></div>
 
                         {/* Total and Form Section */}
                         <div className="p-2 sm:p-4">
@@ -299,58 +293,54 @@ export default function OlivaTucStore() {
                             <h4 className="font-semibold text-gray-800 text-base sm:text-lg">Datos de Entrega</h4>
                             
                             <div className="space-y-1">
-                              <Label htmlFor="name" className="text-gray-700 text-sm">Nombre completo *</Label>
-                              <Input
-                                id="name"
+                              <label className="text-gray-700 text-sm">Nombre completo *</label>
+                              <input
                                 value={customerInfo.name}
                                 onChange={(e) => setCustomerInfo({...customerInfo, name: e.target.value})}
-                                className="border-gray-200 focus:border-green-500 focus:ring-green-500 rounded-lg h-9 text-sm"
+                                className="w-full border border-gray-200 rounded-lg p-2 text-sm focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none"
                                 placeholder="Tu nombre completo"
                               />
                             </div>
 
                             <div className="space-y-1">
-                              <Label htmlFor="phone" className="text-gray-700 text-sm">Teléfono *</Label>
-                              <Input
-                                id="phone"
+                              <label className="text-gray-700 text-sm">Teléfono *</label>
+                              <input
                                 value={customerInfo.phone}
                                 onChange={(e) => setCustomerInfo({...customerInfo, phone: e.target.value})}
-                                className="border-gray-200 focus:border-green-500 focus:ring-green-500 rounded-lg h-9 text-sm"
+                                className="w-full border border-gray-200 rounded-lg p-2 text-sm focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none"
                                 placeholder="Tu número de teléfono"
                               />
                             </div>
 
                             <div className="space-y-1">
-                              <Label htmlFor="address" className="text-gray-700 text-sm">Dirección *</Label>
-                              <Input
-                                id="address"
+                              <label className="text-gray-700 text-sm">Dirección *</label>
+                              <input
                                 value={customerInfo.address}
                                 onChange={(e) => setCustomerInfo({...customerInfo, address: e.target.value})}
-                                className="border-gray-200 focus:border-green-500 focus:ring-green-500 rounded-lg h-9 text-sm"
+                                className="w-full border border-gray-200 rounded-lg p-2 text-sm focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none"
                                 placeholder="Dirección de entrega"
                               />
                             </div>
 
                             <div className="space-y-1">
-                              <Label htmlFor="notes" className="text-gray-700 text-sm">Notas adicionales</Label>
-                              <Textarea
-                                id="notes"
+                              <label className="text-gray-700 text-sm">Notas adicionales</label>
+                              <textarea
                                 value={customerInfo.notes}
                                 onChange={(e) => setCustomerInfo({...customerInfo, notes: e.target.value})}
-                                className="border-gray-200 focus:border-green-500 focus:ring-green-500 rounded-lg text-sm"
+                                className="w-full border border-gray-200 rounded-lg p-2 text-sm focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none"
                                 placeholder="Instrucciones especiales..."
                                 rows={2}
                               />
                             </div>
                           </div>
 
-                          <Button
+                          <button
                             onClick={handleWhatsAppRedirect}
-                            className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold py-2 sm:py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 mt-3 sm:mt-4 text-sm sm:text-base"
+                            className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold py-2 sm:py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 mt-3 sm:mt-4 text-sm sm:text-base flex items-center justify-center"
                           >
                             <Phone className="h-4 w-4 mr-2" />
                             Confirmar Pedido por WhatsApp
-                          </Button>
+                          </button>
                           
                           <p className="text-xs text-gray-500 text-center mt-2">
                             Al confirmar, serás redirigido a WhatsApp
@@ -361,16 +351,6 @@ export default function OlivaTucStore() {
                   </div>
                 )}
               </div>
-
-              {/* Mobile Menu Button */}
-              <Button
-                onClick={() => setShowMobileMenu(!showMobileMenu)}
-                className="md:hidden bg-white/20 hover:bg-white/30 text-white border-white/30"
-                variant="outline"
-                size="sm"
-              >
-                <Menu className="h-5 w-5" />
-              </Button>
             </div>
           </div>
 
@@ -402,7 +382,7 @@ export default function OlivaTucStore() {
         </div>
       </header>
 
-      {/* Overlay for cart */}
+      {/* Mobile Cart Slide-in */}
       {showCart && (
         <div 
           className="fixed inset-0 bg-black/20 z-40"
@@ -417,61 +397,59 @@ export default function OlivaTucStore() {
           <div className="absolute inset-0 bg-gray-500/30 rounded-3xl pointer-events-none z-0"></div>
           {/* Fondo decorativo original */}
           <div className="absolute inset-0 bg-gradient-to-r from-green-600/10 to-amber-500/10 rounded-3xl z-0"></div>
-          <Card className="relative bg-white/70 backdrop-blur-sm border-0 shadow-xl rounded-3xl overflow-hidden z-10">
-            <CardContent className="p-4 sm:p-8 md:p-12">
-              <div className="text-center max-w-2xl sm:max-w-3xl md:max-w-4xl mx-auto">
-                <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-4 mb-4 sm:mb-6">
-                  <Badge className="bg-green-100 text-green-800 px-4 py-2 text-sm font-semibold hover:bg-green-200 transition-colors">
-                    <Award className="h-4 w-4 mr-2" />
-                    100% Natural
-                  </Badge>
-                  <Badge className="bg-amber-100 text-amber-800 px-4 py-2 text-sm font-semibold hover:bg-amber-200 transition-colors">
-                    <Heart className="h-4 w-4 mr-2" />
-                    Calidad Premium
-                  </Badge>
+          <div className="relative bg-white/70 backdrop-blur-sm border-0 shadow-xl rounded-3xl overflow-hidden z-10 p-4 sm:p-8 md:p-12">
+            <div className="text-center max-w-2xl sm:max-w-3xl md:max-w-4xl mx-auto">
+              <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-4 mb-4 sm:mb-6">
+                <span className="bg-green-100 text-green-800 px-4 py-2 text-sm font-semibold rounded-full flex items-center hover:bg-green-200 transition-colors">
+                  <Award className="h-4 w-4 mr-2" />
+                  100% Natural
+                </span>
+                <span className="bg-amber-100 text-amber-800 px-4 py-2 text-sm font-semibold rounded-full flex items-center hover:bg-amber-200 transition-colors">
+                  <Heart className="h-4 w-4 mr-2" />
+                  Calidad Premium
+                </span>
+              </div>
+              
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-green-700 via-green-600 to-amber-600 bg-clip-text text-transparent">
+                Aceite de Oliva Artesanal
+              </h2>
+              
+              <p className="text-base sm:text-lg md:text-xl text-gray-700 mb-6 sm:mb-8 leading-relaxed">
+                En <strong>OLIVA.TUC</strong> nos dedicamos a producir el mejor aceite de oliva extra virgen 
+                de manera artesanal, manteniendo los métodos tradicionales que garantizan 
+                la máxima calidad y sabor auténtico.
+              </p>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                <div className="text-center p-6 bg-white/50 rounded-2xl hover:bg-white/80 transition-all duration-300 hover:shadow-lg">
+                  <Leaf className="h-12 w-12 text-green-600 mx-auto mb-4" />
+                  <h3 className="font-semibold text-gray-800 mb-2">100% Natural</h3>
+                  <p className="text-gray-600 text-sm">Sin aditivos ni conservantes artificiales</p>
                 </div>
-                
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 bg-gradient-to-r from-green-700 via-green-600 to-amber-600 bg-clip-text text-transparent">
-                  Aceite de Oliva Artesanal
-                </h2>
-                
-                <p className="text-base sm:text-lg md:text-xl text-gray-700 mb-6 sm:mb-8 leading-relaxed">
-                  En <strong>OLIVA.TUC</strong> nos dedicamos a producir el mejor aceite de oliva extra virgen 
-                  de manera artesanal, manteniendo los métodos tradicionales que garantizan 
-                  la máxima calidad y sabor auténtico.
-                </p>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
-                  <div className="text-center p-6 bg-white/50 rounded-2xl hover:bg-white/80 transition-all duration-300 hover:shadow-lg">
-                    <Leaf className="h-12 w-12 text-green-600 mx-auto mb-4" />
-                    <h3 className="font-semibold text-gray-800 mb-2">100% Natural</h3>
-                    <p className="text-gray-600 text-sm">Sin aditivos ni conservantes artificiales</p>
-                  </div>
-                  <div className="text-center p-6 bg-white/50 rounded-2xl hover:bg-white/80 transition-all duration-300 hover:shadow-lg">
-                    <Award className="h-12 w-12 text-amber-600 mx-auto mb-4" />
-                    <h3 className="font-semibold text-gray-800 mb-2">Calidad Premium</h3>
-                    <p className="text-gray-600 text-sm">Aceite extra virgen de primera extracción</p>
-                  </div>
-                  <div className="text-center p-6 bg-white/50 rounded-2xl hover:bg-white/80 transition-all duration-300 hover:shadow-lg">
-                    <Heart className="h-12 w-12 text-red-500 mx-auto mb-4" />
-                    <h3 className="font-semibold text-gray-800 mb-2">Hecho con Amor</h3>
-                    <p className="text-gray-600 text-sm">Producción artesanal familiar</p>
-                  </div>
+                <div className="text-center p-6 bg-white/50 rounded-2xl hover:bg-white/80 transition-all duration-300 hover:shadow-lg">
+                  <Award className="h-12 w-12 text-amber-600 mx-auto mb-4" />
+                  <h3 className="font-semibold text-gray-800 mb-2">Calidad Premium</h3>
+                  <p className="text-gray-600 text-sm">Aceite extra virgen de primera extracción</p>
                 </div>
-                
-                <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-green-700">
-                  <div className="flex items-center space-x-2">
-                    <MapPin className="h-5 w-5 text-amber-600" />
-                    <span className="font-medium">Envíos en San Miguel y Yerba Buena</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Clock className="h-5 w-5 text-amber-600" />
-                    <span className="font-medium">Entrega rápida</span>
-                  </div>
+                <div className="text-center p-6 bg-white/50 rounded-2xl hover:bg-white/80 transition-all duration-300 hover:shadow-lg">
+                  <Heart className="h-12 w-12 text-red-500 mx-auto mb-4" />
+                  <h3 className="font-semibold text-gray-800 mb-2">Hecho con Amor</h3>
+                  <p className="text-gray-600 text-sm">Producción artesanal familiar</p>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+              
+              <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-green-700">
+                <div className="flex items-center space-x-2">
+                  <MapPin className="h-5 w-5 text-amber-600" />
+                  <span className="font-medium">Envíos en San Miguel y Yerba Buena</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Clock className="h-5 w-5 text-amber-600" />
+                  <span className="font-medium">Entrega rápida</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* Products Catalog */}
@@ -482,21 +460,21 @@ export default function OlivaTucStore() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-8">
             {products.map((product) => (
-              <Card key={product.id} className="group bg-white border-0 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 rounded-2xl overflow-hidden">
+              <div key={product.id} className="group bg-white border-0 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 rounded-2xl overflow-hidden">
                 <div className="relative">
                   <div className="absolute inset-0 bg-gradient-to-br from-green-500/20 to-amber-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <CardHeader className="relative p-8">
+                  <div className="relative p-8">
                     <div className="flex justify-between items-start mb-4">
                       <div className="flex-1">
-                        <Badge className="mb-3 bg-green-100 text-green-800 hover:bg-green-200 transition-colors">
+                        <span className="mb-3 bg-green-100 text-green-800 hover:bg-green-200 transition-colors px-3 py-1 rounded-full text-sm font-medium">
                           {product.size}
-                        </Badge>
-                        <CardTitle className="text-xl font-bold text-gray-800 group-hover:text-green-700 transition-colors">
+                        </span>
+                        <h4 className="text-xl font-bold text-gray-800 group-hover:text-green-700 transition-colors mt-3">
                           {product.name}
-                        </CardTitle>
-                        <CardDescription className="text-gray-600 mt-2 leading-relaxed">
+                        </h4>
+                        <p className="text-gray-600 mt-2 leading-relaxed">
                           {product.description}
-                        </CardDescription>
+                        </p>
                       </div>
                     </div>
                     
@@ -507,9 +485,9 @@ export default function OlivaTucStore() {
                             <span className="text-sm text-gray-500 line-through">
                               {formatPrice(product.originalPrice)}
                             </span>
-                            <Badge className="bg-red-100 text-red-800 text-xs">
+                            <span className="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full font-medium">
                               ¡Descuento especial!
-                            </Badge>
+                            </span>
                           </div>
                         )}
                         <p className="text-3xl font-bold text-green-600">
@@ -524,19 +502,19 @@ export default function OlivaTucStore() {
                         </div>
                       </div>
                     </div>
-                  </CardHeader>
+                  </div>
                 </div>
                 
-                <CardContent className="p-8 pt-0">
-                  <Button
+                <div className="p-8 pt-0">
+                  <button
                     onClick={() => addToCart(product)}
-                    className="w-full bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white font-semibold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                    className="w-full bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white font-semibold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
                   >
                     <Plus className="h-5 w-5 mr-2" />
                     Agregar al Carrito
-                  </Button>
-                </CardContent>
-              </Card>
+                  </button>
+                </div>
+              </div>
             ))}
           </div>
         </section>
@@ -590,10 +568,6 @@ export default function OlivaTucStore() {
                   <Phone className="h-5 w-5 text-green-400" />
                   <span>381 666 1189 <span className='text-xs text-gray-300'>(facundo)</span></span>
                 </a>
-                <div className="flex items-center space-x-3 hover:text-green-400 transition-colors">
-                  <MapPin className="h-5 w-5 text-green-400" />
-                  <span>San Miguel y Yerba Buena</span>
-                </div>
                 <a
                   href="https://instagram.com/oliva.tuc"
                   target="_blank"
@@ -603,6 +577,11 @@ export default function OlivaTucStore() {
                   <Instagram className="h-5 w-5 text-green-400" />
                   <span>@oliva.tuc</span>
                 </a>
+                <div className="flex items-center space-x-3 hover:text-green-400 transition-colors">
+                  <MapPin className="h-5 w-5 text-green-400" />
+                  <span>San Miguel y Yerba Buena</span>
+                </div>
+                
               </div>
             </div>
 
@@ -630,7 +609,7 @@ export default function OlivaTucStore() {
             </div>
           </div>
           
-          <Separator className="my-8 bg-gray-700" />
+          <div className="border-t border-gray-700 my-8"></div>
           
           <div className="text-center text-gray-400">
             <p>&copy; 2024 OLIVA.TUC. Todos los derechos reservados.</p>
