@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useRef } from "react"
-import { Plus, Minus, ShoppingCart, Phone, MapPin, Leaf, Instagram, Mail, Clock, Award, Heart, X, Menu } from 'lucide-react'
+import { Plus, Minus, ShoppingCart, Phone, MapPin, Leaf, Instagram, Clock, Award, Heart, X, Menu } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -126,7 +126,7 @@ export default function OlivaTucStore() {
 
     const total = getTotalPrice()
 
-    let message = [
+    const message = [
       'Hola! Quiero hacer un pedido de OLIVA.TUC:',
       '',
       'DATOS DEL CLIENTE:',
@@ -481,7 +481,7 @@ export default function OlivaTucStore() {
             <p className="text-base sm:text-xl text-gray-600">Botellas de un litro de aceite de oliva extra virgen</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-8">
-            {products.map((product, index) => (
+            {products.map((product) => (
               <Card key={product.id} className="group bg-white border-0 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 rounded-2xl overflow-hidden">
                 <div className="relative">
                   <div className="absolute inset-0 bg-gradient-to-br from-green-500/20 to-amber-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
